@@ -53,6 +53,13 @@ def get_accused_id():
     accused_id = request.args.get('accused_id')
     return json.dumps(dao.get_accused_info(accused_id))
 
+@app.route('/get_criminal_pie')
+def get_criminal_pie():
+    return json.dumps(dao.get_criminal_pie())
+
+@app.route('/get_penalty_pie')
+def get_penalty_pie():
+    return json.dumps(dao.get_penalty_pie())
 
 @app.route('/')
 def hello_world():

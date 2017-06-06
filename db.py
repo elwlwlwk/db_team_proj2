@@ -1,4 +1,9 @@
 import pymysql.cursors
+from collections import OrderedDict
+from pymysql.cursors import DictCursorMixin, Cursor
+
+class OrderedDictCursor(DictCursorMixin, Cursor):
+    dict_type = OrderedDict
 
 connection= pymysql.connect(host="home.wisewolf.org",
                             user="dbuser",
@@ -9,4 +14,4 @@ def get_cursor():
     return connection.cursor()
 
 def get_dict_cursor():
-    return connection.cursor(pymysql.cursors.DictCursor)
+    return connection.cursor(OrderedDictCursor)
