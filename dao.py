@@ -66,15 +66,15 @@ def get_criminal_pie():
 def get_servitude_pie():
     cursor= get_dict_cursor()
     cursor.execute("select 관련죄, cast(AVG(징역형량) as CHAR) as 평균 "
-                   "from 형사판결피고 join 형사판결 join 소송법 join 법 "
-                   "on 형사판결피고.판결ID= 형사판결.판결ID and 소송법.소송ID= 형사판결.소송ID and 법.법조ID= 소송법.법조ID and 법.법항ID= 소송법.법항ID "
+                   "from 형사판결피고 join 형사판결 join 형사판결법 join 법 "
+                   "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결법.판결ID= 형사판결.판결ID and 법.법조ID= 형사판결법.법조ID and 법.법항ID= 형사판결법.법항ID "
                    "group by 관련죄;")
     return cursor.fetchall()
 
 def get_fine_pie():
     cursor = get_dict_cursor()
     cursor.execute("select 관련죄, cast(AVG(벌금형량) as CHAR) as 평균 "
-                   "from 형사판결피고 join 형사판결 join 소송법 join 법 "
-                   "on 형사판결피고.판결ID= 형사판결.판결ID and 소송법.소송ID= 형사판결.소송ID and 법.법조ID= 소송법.법조ID and 법.법항ID= 소송법.법항ID "
+                   "from 형사판결피고 join 형사판결 join 형사판결법 join 법 "
+                   "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결법.판결ID= 형사판결.판결ID and 법.법조ID= 형사판결법.법조ID and 법.법항ID= 형사판결법.법항ID "
                    "group by 관련죄;")
     return cursor.fetchall()
