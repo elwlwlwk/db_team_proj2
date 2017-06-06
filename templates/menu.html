@@ -2,15 +2,33 @@
 {% block title %}Index{% endblock %}
 {% block head %}
   {{ super() }}
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
     <style type="text/css">
     .important { color: #336699; }
   </style>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
+    var tableSetting = {
+                searching: false,
+                    "columns": [
+                    { "className": "dt-center", "width": "10%" },
+                    { "className": "dt-center", "width": "10%" },
+                    { "className": "dt-center", "width": "10%" },
+                    { "className": "dt-center", "width": "10%" },
+                    { "width": "40%" },
+                    { "className": "dt-center", "width": "10%" },
+                    { "className": "dt-center", "width": "10%" }
+                  ]
+            };
         $(document).ready(function(){
+            $('#example').DataTable(tableSetting);
+
             TESTER = document.getElementById('tester');
             var trace1 = {
                 x: [
@@ -44,75 +62,117 @@
 
             var data = [trace1, trace2];
 
-            var layout = {barmode: 'group'};
+            var layout = {
+                  font: {
+                    family: "KoPub Dotum",
+                    size: 18,
+                    color: '#6D6E70'
+                  },
+                barmode: 'group',
+                legend: {
+                      font: {
+                      family: "KoPub Dotum",
+                      size: 23,
+                      color: '#6D6E70'
+                        },
+                },
+            };
 
             Plotly.newPlot(TESTER, data, layout);
         });
 
         function search() {
+            $('#example').dataTable().fnDestroy();
+
             $.ajax({
                   type: "GET",
                   url: "/court_precedent",
                   data: { name: $("#courtName")[0].value }
             }).done(function( msg ) {
-                  alert( "Data Saved: " + msg );
-            }).error(function(e) {
+                ret = JSON.parse(msg);
+                civil = ret.civil.map((x) => {return{
+                    타입: "민사",
+                    판결ID:x.판결ID,
+                    판결단계:x.판결단계,
+                    판결날짜:x.판결날짜,
+                    판결전문:x.판결전문,
+                    피고판결불복여부:x.피고판결불복여부,
+                    법원이름:x.법원이름
+                }});
+                criminal = ret.criminal.map((x) => {return{
+                    타입: "형사",
+                    판결ID:x.판결ID,
+                    판결단계:x.판결단계,
+                    판결날짜:x.판결날짜,
+                    판결전문:x.판결전문,
+                    피고판결불복여부:x.피고판결불복여부,
+                    법원이름:x.법원이름
+                }});
+
+                var tableBody = document.getElementById("tableBody");
+                while (tableBody.firstChild) {
+                    tableBody.removeChild(tableBody.firstChild);
+                }
+                for(idx in civil) {
+                    var tr = document.createElement("tr");
+
+                    Object.keys(civil[idx]).forEach(function(key) {
+                        var td = document.createElement("td");
+                        td.innerHTML = civil[idx][key];
+                        tr.append(td);
+                    });
+                    $("#tableBody")[0].append(tr);
+                }
+                for(idx in criminal){
+                    var tr = document.createElement("tr");
+
+                    Object.keys(criminal[idx]).forEach(function(key) {
+                        var td = document.createElement("td");
+                        td.innerHTML = criminal[idx][key];
+                        tr.append(td);
+                    });
+                    $("#tableBody")[0].append(tr);
+                }
+
+                $('#example').DataTable(tableSetting);
+
+
+            })
+                {#.error(function(e) {
                 alert(e);
-            });
+            });#}
         }
     </script>
 {% endblock %}
 {% block content %}
-<div id="tester" style="width:600px;height:250px;"></div>
+<div id="tester" style="width:100%;height:30%;"></div>
 
     <input id="courtName" type="text" name="courtName"/><button onclick="search()">검색</button>
 
  <table id="example" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>타입</th>
+                <th>판결ID</th>
+                <th>판결단계</th>
+                <th>판결날짜</th>
+                <th>판결전문</th>
+                <th>피고판결불복여부</th>
+                <th>법원이름</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>타입</th>
+                <th>판결ID</th>
+                <th>판결단계</th>
+                <th>판결날짜</th>
+                <th>판결전문</th>
+                <th>피고판결불복여부</th>
+                <th>법원이름</th>
             </tr>
         </tfoot>
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-            </tr>
+        <tbody id="tableBody">
         </tbody>
     </table>
 {% endblock %}
