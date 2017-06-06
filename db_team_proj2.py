@@ -1,7 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template
+import dao
 
 app = Flask(__name__)
 
+@app.route('/courts')
+def courts():
+    civil_freq= dao.get_court_civil_freq()
+    criminal_freq= dao.get_court_criminal_freq()
+    return render_template('menu.html', freq={'civil_freq':civil_freq, 'criminal_freq':criminal_freq})
 
 @app.route('/')
 def hello_world():
