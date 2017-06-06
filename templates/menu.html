@@ -2,7 +2,8 @@
 {% block title %}Index{% endblock %}
 {% block head %}
   {{ super() }}
-  <style type="text/css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <style type="text/css">
     .important { color: #336699; }
   </style>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -11,18 +12,33 @@
     <script>
         $(document).ready(function(){
             TESTER = document.getElementById('tester');
-
             var trace1 = {
-              x: ['giraffes', 'orangutans', 'monkeys'],
-              y: [20, 14, 23],
-              name: '형사 소송',
+                x: [
+            {% for civil in freq.civil_freq %}
+                "{{civil[0]}}",
+            {% endfor %}
+                ],
+              y: [
+            {% for civil in freq.civil_freq %}
+                {{civil[1]}},
+            {% endfor %}
+              ],
+              name: '민사 소송',
               type: 'bar'
             };
 
             var trace2 = {
-              x: ['giraffes', 'orangutans', 'monkeys'],
-              y: [12, 18, 29],
-              name: '민사 소송',
+                x: [
+            {% for criminal in freq.criminal_freq %}
+                "{{criminal[0]}}",
+            {% endfor %}
+                ],
+              y: [
+            {% for criminal in freq.criminal_freq %}
+                {{criminal[1]}},
+            {% endfor %}
+              ],
+              name: '형사 소송',
               type: 'bar'
             };
 
@@ -32,12 +48,71 @@
 
             Plotly.newPlot(TESTER, data, layout);
         });
+
+        function search() {
+            $.ajax({
+                  type: "GET",
+                  url: "/court_precedent",
+                  data: { name: $("#courtName")[0].value }
+            }).done(function( msg ) {
+                  alert( "Data Saved: " + msg );
+            }).error(function(e) {
+                alert(e);
+            });
+        }
     </script>
 {% endblock %}
 {% block content %}
 <div id="tester" style="width:600px;height:250px;"></div>
 
-    </br>
-    리스트1
+    <input id="courtName" type="text" name="courtName"/><button onclick="search()">검색</button>
 
+ <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+                <td>$170,750</td>
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009/01/12</td>
+                <td>$86,000</td>
+            </tr>
+        </tbody>
+    </table>
 {% endblock %}
