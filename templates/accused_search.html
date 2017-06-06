@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+    <style type="text/css">
+    .important { color: #336699; }
+  </style>
+    <script>
+    var tableSetting = {
+                searching: false,
+                    "columns": [
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "5%" },
+                    { "className": "dt-center", "width": "20%" },
+                    { "className": "dt-center", "width": "5%" }
+                  ]
+            };
+
+        $(document).ready(function() {
+            $('#example').DataTable(tableSetting);
+
+            $.ajax({
+                type: "GET",
+                url: "/get_top_accused"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+                var top_accused = document.getElementById("top_accused");
+                while (top_accused.firstChild) {
+                    top_accused.removeChild(tableBody.firstChild);
+                }
+                for (idx in ret) {
+                    var tr = document.createElement("tr");
+                    Object.keys(ret[idx]).forEach(function (key) {
+                        var td = document.createElement("td");
+                        td.innerHTML = ret[idx][key];
+                        tr.append(td);
+                    });
+                    $("#top_accused")[0].append(tr);
+                }
+            });
+
+        });
+
+        function search() {
+            $('#example').dataTable().fnDestroy();
+
+            $.ajax({
+                type: "GET",
+                url: "/get_accused_id",
+                data: {accused_id: $("#accusedID")[0].value}
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+                if(document.getElementById("example")!=null) {
+                    $('#content').remove($("#example")[0]);
+                }
+                var table = document.createElement("table");
+                table.setAttribute('id','example');
+                table.setAttribute('class','display');
+                table.setAttribute('cellspacing','0');
+                table.setAttribute('width','100%');
+                $('#content').append(table);
+                var thead = document.createElement("thead");
+                thead.setAttribute('id','tableHead');
+                table.append(thead);
+                var tfoot = document.createElement("tfoot");
+                tfoot.setAttribute('id','tableFoot');
+                table.append(tfoot);
+                var tbody = document.createElement("tbody");
+                tbody.setAttribute('id','tableBody');
+                table.append(tbody);
+
+                var tableHead = document.getElementById("tableHead");
+                var tr = document.createElement("tr");
+                Object.keys(ret[0]).forEach(function (key) {
+                    var th = document.createElement("th");
+                    th.innerHTML = key;
+                    tr.append(th);
+                });
+                $("#tableHead")[0].append(tr);
+                var tableFoot = document.getElementById("tableFoot");
+                var tr = document.createElement("tr");
+                Object.keys(ret[0]).forEach(function (key) {
+                    var th = document.createElement("th");
+                    th.innerHTML = key;
+                    tr.append(th);
+                });
+                $("#tableFoot")[0].append(tr);
+
+                var tableBody = document.getElementById("tableBody");
+                while (tableBody.firstChild) {
+                    tableBody.removeChild(tableBody.firstChild);
+                }
+                for (idx in ret) {
+                    var tr = document.createElement("tr");
+                    Object.keys(ret[idx]).forEach(function (key) {
+                        var td = document.createElement("td");
+                        td.innerHTML = ret[idx][key];
+                        tr.append(td);
+                    });
+                    $("#tableBody")[0].append(tr);
+                }
+                $('#example').DataTable(tableSetting);
+
+
+            })
+            {#.error(function(e) {
+                alert(e);
+            });#}
+        }
+
+    </script>
+{% endblock %}
+{% block content %}
+
+
+ <table id="top_accused" cellspacing="0" width="100%">
+    <tr>
+        <td>이름</td>
+        <td>전과 수</td>
+    </tr>
+ </table>
+
+    피고ID: <input id="accusedID" type="text" name="accusedID"/><button onclick="search()">검색</button>
+    </br>
+    </br>
+
+{% endblock %}
