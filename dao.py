@@ -38,10 +38,10 @@ def get_court_criminal_precedents(court_name):
 def get_top_accused():
     cursor= get_dict_cursor()
     cursor.execute('select 이름, count(*) as count '
-                   'from (SELECT 소송ID as 소송ID, 사람.이름 as 이름 '
+                   'from (SELECT 소송ID as 소송ID, 사람.ID as 이름 '
                    'FROM 형사판결피고 join 사람 join 형사판결 '
                    'on 사람.ID= 형사판결피고.피고ID and 형사판결.판결ID= 형사판결피고.판결ID '
-                   'group by 형사판결.소송ID, 사람.이름) as 범죄자 '
+                   'group by 형사판결.소송ID, 사람.ID) as 범죄자 '
                    'group by 이름 '
                    'order by count desc '
                    'limit 3;')
@@ -58,8 +58,9 @@ def get_accused_info(accused_id):
 def get_criminal_pie():
     cursor= get_dict_cursor()
     cursor.execute("select 관련죄, count(*) as count "
-                   "from (select 소송ID from 형사판결 group by 소송ID) as 형사소송 join 소송법 join 법 "
-                   "on 형사소송.소송ID= 소송법.소송ID and 소송법.법조ID=법.법조ID and 소송법.법항ID=법.법항ID "
+                   "from (select 판결ID from 형사판결 "
+                   "group by 판결ID) as 형사소송 join 형사판결법 join 법 "
+                   "on 형사소송.판결ID= 형사판결법.판결ID and 형사판결법.법조ID=법.법조ID and 형사판결법.법항ID=법.법항ID "
                    "group by 관련죄;")
     return cursor.fetchall()
 
