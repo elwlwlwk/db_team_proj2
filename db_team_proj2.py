@@ -19,9 +19,9 @@ def court_precedent():
     for idx in range(len(civil_pre)):
         civil_pre[idx]['판결날짜']= str(civil_pre[idx]['판결날짜'])
     for idx in range(len(criminal_pre)):
-        criminal_pre[idx]['판결날짜']= str(civil_pre[idx]['판결날짜'])
+        criminal_pre[idx]['판결날짜']= str(criminal_pre[idx]['판결날짜'])
     print(civil_pre)
-    return json.dumps({'civil':criminal_pre,'criminal':criminal_pre})
+    return json.dumps({'civil':civil_pre,'criminal':criminal_pre})
 
 @app.route('/')
 def hello_world():
