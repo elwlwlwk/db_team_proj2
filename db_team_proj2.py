@@ -57,9 +57,12 @@ def get_accused_id():
 def get_criminal_pie():
     return json.dumps(dao.get_criminal_pie())
 
-@app.route('/get_penalty_pie')
-def get_penalty_pie():
-    return json.dumps(dao.get_penalty_pie())
+@app.route('/get_fine_pie')
+def get_fine_pie():
+    return json.dumps(dao.get_fine_pie())
+@app.route('/get_servitude_pie')
+def get_servitude_pie():
+    return json.dumps(dao.get_servitude_pie())
 
 @app.route('/')
 def hello_world():
