@@ -66,7 +66,7 @@ def get_servitude_pie():
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return render_template('index.html')
 
 @app.route('/hello/')
 @app.route('/hello/<name>')
