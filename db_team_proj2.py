@@ -13,15 +13,46 @@ def courts():
 
 @app.route('/court_precedent')
 def court_precedent():
-    name= request.args.get('name','')
+    name= request.args.get('name', '')
     civil_pre= dao.get_court_civil_precedents(name)
     criminal_pre= dao.get_court_criminal_precedents(name)
     for idx in range(len(civil_pre)):
         civil_pre[idx]['판결날짜']= str(civil_pre[idx]['판결날짜'])
     for idx in range(len(criminal_pre)):
         criminal_pre[idx]['판결날짜']= str(criminal_pre[idx]['판결날짜'])
-    print(civil_pre)
-    return json.dumps({'civil':civil_pre,'criminal':criminal_pre})
+    return json.dumps({'civil':civil_pre, 'criminal':criminal_pre})
+
+@app.route('/precedents')
+def civil_precedents():
+    kind= request.args.get('kind')
+    reject= request.args.get('reject')
+
+    if kind== 'civil':
+        dao.get_criminal_precedents()
+        pass
+    else:
+        dao.get_civil_precedents()
+        pass
+    return
+
+@app.route('/criminal_statics')
+def criminal_statics():
+    pass
+
+@app.route('/accused_search')
+def accused_search():
+
+    return render_template('accused_search.html')
+
+@app.route('/get_top_accused')
+def get_top_accused():
+    return json.dumps(dao.get_top_accused())
+
+@app.route('/get_accused_id')
+def get_accused_id():
+    accused_id = request.args.get('accused_id')
+    return json.dumps(dao.get_accused_info(accused_id))
+
 
 @app.route('/')
 def hello_world():
