@@ -5,9 +5,26 @@
   <style type="text/css">
     .important { color: #336699; }
   </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            TESTER = document.getElementById('tester');
+            Plotly.plot(TESTER, [{
+                x: [1, 2, 3, 4, 5],
+                y: [1, 2, 4, 8, 16]
+            }], {
+                margin: {t: 0}
+            });
+        });
+    console.log( Plotly.BUILD );
+    </script>
 {% endblock %}
 {% block content %}
-  <h1>Index</h1>
-  <p class="important">
-    Welcome on my awesome homepage.
+<div id="tester" style="width:600px;height:250px;"></div>
+
+    </br>
+    리스트1
+
 {% endblock %}
