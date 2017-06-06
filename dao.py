@@ -1,4 +1,4 @@
-from db import get_cursor
+from db import get_cursor, get_dict_cursor
 
 def get_court_civil_freq():
     cursor= get_cursor()
@@ -17,4 +17,20 @@ def get_court_criminal_freq():
 def get_courts():
     cursor= get_cursor()
     cursor.execute('select * from 법원')
+    return cursor.fetchall()
+
+def get_court_civil_precedents(court_name):
+    cursor= get_dict_cursor()
+    cursor.execute('SELECT * '
+                   'FROM 민사판결 join 민사판결법원 '
+                   'on 민사판결.판결ID= 민사판결법원.판결ID '
+                   'where 법원이름=%s;', (court_name))
+    return cursor.fetchall()
+
+def get_court_criminal_precedents(court_name):
+    cursor= get_dict_cursor()
+    cursor.execute('SELECT * '
+                   'FROM 형사판결 join 형사판결법원 '
+                   'on 형사판결.판결ID= 형사판결법원.판결ID '
+                   'where 법원이름=%s;', (court_name))
     return cursor.fetchall()

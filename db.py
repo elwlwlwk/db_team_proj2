@@ -7,3 +7,6 @@ connection= pymysql.connect(host="home.wisewolf.org",
                             charset="utf8")
 def get_cursor():
     return connection.cursor()
+
+def get_dict_cursor():
+    return connection.cursor(pymysql.cursors.DictCursor)
