@@ -107,6 +107,14 @@ def get_precedent():
 
     return json.dumps(result)
 
+@app.route('/charge_search')
+def charge_search():
+    return render_template('charge_search.html')
+
+@app.route('/get_precedent_by_charge')
+def get_precedent_by_charge():
+    return ''
+
 @app.route('/')
 def hello_world():
     return render_template('index.html')
