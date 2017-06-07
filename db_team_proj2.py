@@ -62,9 +62,16 @@ def get_fine_pie():
     return json.dumps(dao.get_fine_pie())
 @app.route('/get_servitude_pie')
 def get_servitude_pie():
-    servitute= dao.get_servitude_pie()
-
     return json.dumps(dao.get_servitude_pie())
+
+@app.route('/precedent')
+def precedent():
+    return render_template('precedent.html', precedent= request.args.get('precedent'))
+
+@app.route('/get_precedent')
+def get_precedent():
+    precedent_id= request.args.get('precedent')
+    return {}
 
 @app.route('/')
 def hello_world():

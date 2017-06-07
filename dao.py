@@ -27,6 +27,11 @@ def get_court_civil_precedents(court_name):
                    'where 법원이름=%s;', (court_name))
     return cursor.fetchall()
 
+def get_precedents(precedents_id):
+    cursor= get_dict_cursor()
+    cursor.execute('')
+    return ''
+
 def get_court_criminal_precedents(court_name):
     cursor= get_dict_cursor()
     cursor.execute('SELECT * '
