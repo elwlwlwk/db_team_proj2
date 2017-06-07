@@ -52,6 +52,14 @@
 
         function search() {
             $('#example').dataTable().fnDestroy();
+                 var tableBody = document.getElementById("tableBody");
+                while (tableBody && tableBody.firstChild) {
+                    tableBody.removeChild(tableBody.firstChild);
+                }
+                if (document.getElementById("example") != null) {
+                        $('#content')[0].removeChild(document.getElementById("example"));
+                }
+
 
             $.ajax({
                 type: "GET",

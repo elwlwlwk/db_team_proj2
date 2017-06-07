@@ -14,58 +14,126 @@
     }
   </style>
     <script>
+    var tableSetting = {
+        searching: false,
+    };
 
          $(function(){
             $(".type-menu li a").click(function(){
-              $(".type:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
+              $(".type").html($(this).text()+' &nbsp;<span class="caret"></span>');
               if($(this).text()=="민사") {
-                  $(".type:first-child").val('civil');
+                  $(".type").val('civil');
               } else if ($(this).text()=="형사") {
-                  $(".type:first-child").val('criminal');
+                  $(".type").val('criminal');
               }
             });
          });
          $(function(){
             $(".dismiss-menu li a").click(function(){
-              $(".dismiss:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
+              $(".dismiss").html($(this).text()+' &nbsp;<span class="caret"></span>');
               if($(this).text()=="예") {
-                  $(".dismiss:first-child").val('O');
+                  $(".dismiss").val('O');
               } else if ($(this).text()=="아니오") {
-                  $(".dismiss:first-child").val('X');
+                  $(".dismiss").val('X');
               } else if ($(this).text()=="일부 기각") {
-                  $(".dismiss:first-child").val('E');
+                  $(".dismiss").val('E');
               } else {
-                  $(".dismiss:first-child").val('');
+                  $(".dismiss").val('');
               }
             });
          });
          $(function(){
             $(".farewell-menu li a").click(function(){
-              $(".farewell:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
+              $(".farewell").html($(this).text()+' &nbsp;<span class="caret"></span>');
               if($(this).text()=="예") {
-                  $(".farewell:first-child").val('O');
+                  $(".farewell").val('O');
               } else if ($(this).text()=="아니오") {
-                  $(".farewell:first-child").val('X');
+                  $(".farewell").val('X');
               } else if ($(this).text()=="일부 기각") {
-                  $(".farewell:first-child").val('E');
+                  $(".farewell").val('E');
               } else {
-                  $(".farewell:first-child").val('');
+                  $(".farewell").val('');
               }
             });
          });
 
          function search() {
+             $('#example').dataTable().fnDestroy();
+                 var tableBody = document.getElementById("tableBody");
+                while (tableBody && tableBody.firstChild) {
+                    tableBody.removeChild(tableBody.firstChild);
+                }
+                if (document.getElementById("example") != null) {
+                        $('#content')[0].removeChild(document.getElementById("example"));
+                }
+
+
              $.ajax({
                 type: "GET",
                 url: "/get_precedent_by_charge",
                 data: {
-                    type: $(".type:first-child")[0].value,
+                    type: $(".type")[0].value,
                     charge: $("#charge")[0].value,
-                    dismiss: $(".dismiss:first-child")[0].value,
-                    farewell: $(".farewell:first-child")[0].value
+                    dismiss: $(".dismiss")[0].value,
+                    farewell: $(".farewell")[0].value
                 }
             }).done(function (msg) {
-                 data = JSON.parse(msg);
+
+                ret = JSON.parse(msg);
+                if (ret!=[]) {
+
+                    var table = document.createElement("table");
+                    table.setAttribute('id', 'example');
+                    table.setAttribute('class', 'display');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead');
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody');
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    Object.keys(ret[0]).forEach(function (key) {
+                        var th = document.createElement("th");
+                        th.innerHTML = key;
+                        tr.append(th);
+                    });
+                    $("#tableHead")[0].append(tr);
+
+                    var tableBody = document.getElementById("tableBody");
+                    while (tableBody.firstChild) {
+                        tableBody.removeChild(tableBody.firstChild);
+                    }
+                    for (idx in ret) {
+                        var tr = document.createElement("tr");
+                        Object.keys(ret[idx]).forEach(function (key) {
+                            var td = document.createElement("td");
+                            td.innerHTML = ret[idx][key];
+                            tr.append(td);
+                        });
+                        $("#tableBody")[0].append(tr);
+                    }
+                    var table = $('#example').DataTable(tableSetting);
+                    $('#example tbody').on('click', 'tr', function () {
+                        var data = table.row(this).data();
+                        window.location.href = '/precedent?precedent=' + data[0];
+
+                    });
+                } else {
+                    var tableBody = document.getElementById("tableBody");
+                    while (tableBody.firstChild) {
+                        tableBody.removeChild(tableBody.firstChild);
+                    }
+                }
+
+
+
+
+
              });
          }
 
@@ -75,6 +143,7 @@
 
     <div class="form-group">
         <div class="dropdown">
+        <label for="usr">타입:</label>
           <button class="btn btn-primary dropdown-toggle type" type="button" data-toggle="dropdown">타입
           <span class="caret"></span></button>
           <ul class="dropdown-menu type-menu">
@@ -84,7 +153,8 @@
         </div>
 
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle dismiss" type="button" data-toggle="dropdown">기각
+        <label for="usr">기각:</label>
+          <button class="btn btn-primary dropdown-toggle dismiss" type="button" data-toggle="dropdown">선택 안함
           <span class="caret"></span></button>
           <ul class="dropdown-menu dismiss-menu">
             <li><a href="#">예</a></li>
@@ -95,7 +165,8 @@
         </div>
 
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle farewell" type="button" data-toggle="dropdown">환송
+            <label for="usr">환송:</label>
+          <button class="btn btn-primary dropdown-toggle farewell" type="button" data-toggle="dropdown">선택 안함
           <span class="caret"></span></button>
           <ul class="dropdown-menu farewell-menu">
             <li><a href="#">예</a></li>
