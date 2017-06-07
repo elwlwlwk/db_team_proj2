@@ -117,6 +117,10 @@ def get_precedent_by_charge():
     charge= request.args.get('charge')
     dismiss= request.args.get('dismiss')
     farewell= request.args.get('farewell')
+    if dismiss== '':
+        dismiss='%'
+    if farewell== '':
+        farewell='%'
     if type== 'civil':
         return json.dumps(dao.get_civil_precedent_by_charge(charge,dismiss,farewell))
     else:
