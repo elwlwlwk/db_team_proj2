@@ -124,16 +124,20 @@
 
 
  <table id="top_accused" class="table" cellspacing="0" width="100%">
- <tbody>
+ <thead>
      <tr>
-        <td>이름</td>
-        <td>전과 수</td>
+        <th>이름</th>
+        <th>전과 수</th>
     </tr>
+ </thead>
+  <tbody>
  </tbody>
+
  </table>
-
-    피고ID: <input id="accusedID" type="text" name="accusedID"/><button onclick="search()">검색</button>
-    </br>
-    </br>
-
+        <div class="form-group">
+        <label for="usr">피고ID: </label>
+        <input id="accusedID" class="form-control" type="text" name="accusedID"/>
+        </br>
+        <center><button class="btn btn-primary" style="width:100%" onclick="search()">검색</button></center>
+    </div>
 {% endblock %}

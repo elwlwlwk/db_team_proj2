@@ -169,24 +169,28 @@
 
                 var tableHead = document.getElementById("tableHead");
                 var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
+                if(ret[0]!=undefined) {
+                     Object.keys(ret[0]).forEach(function (key) {
+                        var th = document.createElement("th");
+                        th.innerHTML = key;
+                        tr.append(th);
                     });
-                    tbody.append(tr);
+                    thead.append(tr);
+
+                    while (tbody.firstChild) {
+                        tbody.removeChild(tbody.firstChild);
+                    }
+                    for (idx in ret) {
+                        var tr = document.createElement("tr");
+                        Object.keys(ret[idx]).forEach(function (key) {
+                            var td = document.createElement("td");
+                            td.innerHTML = ret[idx][key];
+                            tr.append(td);
+                        });
+                        tbody.append(tr);
+                    }
+                } else {
+
                 }
 
                 ret = data.judge;
@@ -286,7 +290,8 @@
     <div class="form-group">
         <label for="usr">판결ID:</label>
         <input id="accusedID" class="form-control" type="text" name="accusedID"/>
-        <button class="btn btn-primary" onclick="search()">검색</button>
+        </br>
+        <center><button class="btn btn-primary" style="width:100%" onclick="search()">검색</button></center>
     </div>
     </br>
     </br>

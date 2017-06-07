@@ -3,7 +3,7 @@
   <head>
     {% block head %}
     {#<link rel='stylesheet' href='https://cdn.jsdelivr.net/font-kopub/1.0/kopubdotum.css'>#}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?q=5">
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <!-- Latest compiled and minified CSS -->
@@ -23,21 +23,16 @@
     {% endblock %}
   </head>
   <body>
-  <div class="col-sm-12 row-sm-2">
-      <a href="/courts">법원 검색</a>
-      <a href="/precedent">판결 검색</a>
-      <a href="/accused_search">피고 검색</a>
+  <div id="header" class="header col-sm-12" style="font-size:x-large;font-weight: 700">
+      <a href="/courts">법원 검색</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="/precedent">판결 검색</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="/accused_search">피고 검색</a>&nbsp;&nbsp;|&nbsp;&nbsp;
       <a href="/criminal_statics">통계</a>
   </div>
 
       <div class="col-sm-2"></div>
-    <div id="content" class="col-sm-8">{% block content %}{% endblock %}</div>
+    <div id="content" class="col-sm-8" style="word-break: break-all;height:80%">{% block content %}{% endblock %}</div>
       <div class="col-sm-2"></div>
 
-    <div id="footer" class="col-sm-12 footer">
-      {% block footer %}
-      &copy; DataBase Team Project - Group2
-      {% endblock %}
-    </div>
   </body>
 </html>
