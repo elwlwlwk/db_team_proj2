@@ -90,7 +90,7 @@ def get_fine_pie():
 
 def get_criminal_precedent(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("SELECT 형사판결.판결ID, 형사판결.소송ID, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 변호사국선여부, 국민참여재판여부, 형사판결법원.법원이름 "
+    cursor.execute("SELECT 형사판결.판결ID, 형사판결.소송ID, 형사판결법원.법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 변호사국선여부, 국민참여재판여부 "
                    "FROM 형사판결 join 형사판결법원 "
                    "on 형사판결.판결ID= 형사판결법원.판결ID "
                    "where 형사판결.판결ID= %s", (precedent_id))
@@ -98,7 +98,7 @@ def get_criminal_precedent(precedent_id):
 
 def get_civil_precedent(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("SELECT 민사판결.판결ID, 민사판결.소송ID, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 민사판결법원.법원이름 "
+    cursor.execute("SELECT 민사판결.판결ID, 민사판결.소송ID, 민사판결법원.법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문 "
                    "FROM 민사판결 join 민사판결법원 "
                    "on 민사판결.판결ID= 민사판결법원.판결ID "
                    "where 민사판결.판결ID= %s", (precedent_id))
@@ -126,7 +126,7 @@ def get_civil_defendant(precedent_id):
 
 def get_criminal_plaintiff(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select 형사소송원고.* "
+    cursor.execute("select 형사소송원고.원고ID "
                    "from 형사소송원고 join 형사판결 "
                    "on 형사소송원고.소송ID= 형사판결.소송ID "
                    "where 형사판결.판결ID= %s", (precedent_id))
@@ -134,7 +134,7 @@ def get_criminal_plaintiff(precedent_id):
 
 def get_civil_plaintiff(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select 민사소송원고.* "
+    cursor.execute("select 민사소송원고.원고ID, 민사소송원고.법원조정여부 "
                    "from 민사소송원고 join 민사판결 "
                    "on 민사소송원고.소송ID= 민사판결.소송ID "
                    "where 민사판결.판결ID= %s", (precedent_id))
@@ -142,13 +142,50 @@ def get_civil_plaintiff(precedent_id):
 
 def get_criminal_judge(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 형사판결판사 where 판결ID= %s", (precedent_id))
+    cursor.execute("select 판사ID from 형사판결판사 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_civil_judge(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 민사판결판사 where 판결ID= %s", (precedent_id))
+    cursor.execute("select 판사ID from 민사판결판사 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
+
+def get_prosecutor(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 검사ID from 형사판결검사 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_criminal_lawyer(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 로펌, 변호사ID from 형사판결변호사 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_lawyer(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 로펌, 변호사ID from 민사판결변호사 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_criminal_witness(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 증인ID from 형사판결증인 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_witness(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 증인ID from 민사판결증인 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_deputy(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 소송대리인ID from 민사판결소송대리인 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_juror(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 배심원ID from 형사판결배심원 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+
 
 def get_criminal_law(precedent_id):
     cursor = get_dict_cursor()
