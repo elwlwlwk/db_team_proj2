@@ -14,515 +14,42 @@
     }
   </style>
     <script>
-    var tableSetting = {
-                searching: false,
-            };
-
-        $(document).ready(function() {
-                        $('#example').dataTable().fnDestroy();
-
-            $.ajax({
-                type: "GET",
-                url: "/get_precedent",
-                data: {precedent: "{{precedent}}" }
-            }).done(function (msg) {
-                data = JSON.parse(msg);
-
-
-
-                Object.keys(data).forEach(function (key) {
-
-
-                });
-
-                    ret = data.precedent;
-                    var id = "precedent";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#"+id)[0]);
-                    }
-                    var table = document.createElement("table");
-
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead'+id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody'+id);
-                    table.append(tbody);
-
-                    for (idx in ret) {
-                        Object.keys(ret[idx]).forEach(function (key2) {
-                            var tr = document.createElement("tr");
-                            var th = document.createElement("th");
-                            th.innerHTML = key2;
-                            tr.append(th);
-                            var td = document.createElement("td");
-                            td.innerHTML = ret[idx][key2];
-                            tr.append(td);
-                            tbody.append(tr);
-                        });
-                    }
-
-
-
-                ret = data.plaintiff;
-                var id = "plaintiff";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
-                    });
-                    tbody.append(tr);
-                }
-
-                ret = data.defendant;
-                var id = "defendant";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
-                    });
-                    tbody.append(tr);
-                }
-
-                ret = data.evidence;
-                var id = "evidence";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                if(ret[0]!=undefined) {
-                     Object.keys(ret[0]).forEach(function (key) {
-                        var th = document.createElement("th");
-                        th.innerHTML = key;
-                        tr.append(th);
-                    });
-                    thead.append(tr);
-
-                    while (tbody.firstChild) {
-                        tbody.removeChild(tbody.firstChild);
-                    }
-                    for (idx in ret) {
-                        var tr = document.createElement("tr");
-                        Object.keys(ret[idx]).forEach(function (key) {
-                            var td = document.createElement("td");
-                            td.innerHTML = ret[idx][key];
-                            tr.append(td);
-                        });
-                        tbody.append(tr);
-                    }
-                } else {
-
-                }
-
-                ret = data.judge;
-                var id = "judge";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
-                    });
-                    tbody.append(tr);
-                }
-
-                ret = data.prosecutor;
-                if(ret!=undefined) {
-                    var id = "prosecutor";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-
-                ret = data.lawyer;
-                if(ret!=undefined) {
-                    var id = "lawyer";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-                                ret = data.witness;
-                if(ret!=undefined) {
-                    var id = "witness";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-                ret = data.deputy;
-                if(ret!=undefined) {
-                    var id = "deputy";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-
-                ret = data.juror;
-                if(ret!=undefined) {
-                    var id = "juror";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-
-                ret = data.law;
-                var id = "law";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
-                    });
-                    tbody.append(tr);
-                }
-
-
-
-
-
-
-
-
-            })
-        });
 
          $(function(){
-            $(".dropdown-menu li a").click(function(){
-              $(".dropdown-toggle:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
+            $(".type-menu li a").click(function(){
+              $(".type:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
               if($(this).text()=="민사") {
-                  $(".dropdown-toggle:first-child").val('civil');
+                  $(".type:first-child").val('civil');
               } else if ($(this).text()=="형사") {
-                  $(".dropdown-toggle:first-child").val('criminal');
+                  $(".type:first-child").val('criminal');
+              }
+            });
+         });
+         $(function(){
+            $(".dismiss-menu li a").click(function(){
+              $(".dismiss:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
+              if($(this).text()=="예") {
+                  $(".dismiss:first-child").val('O');
+              } else if ($(this).text()=="아니오") {
+                  $(".dismiss:first-child").val('X');
+              } else if ($(this).text()=="일부 기각") {
+                  $(".dismiss:first-child").val('E');
+              } else {
+                  $(".dismiss:first-child").val('');
+              }
+            });
+         });
+         $(function(){
+            $(".farewell-menu li a").click(function(){
+              $(".farewell:first-child").html($(this).text()+' &nbsp;<span class="caret"></span>');
+              if($(this).text()=="예") {
+                  $(".farewell:first-child").val('O');
+              } else if ($(this).text()=="아니오") {
+                  $(".farewell:first-child").val('X');
+              } else if ($(this).text()=="일부 기각") {
+                  $(".farewell:first-child").val('E');
+              } else {
+                  $(".farewell:first-child").val('');
               }
             });
          });
@@ -532,11 +59,11 @@
                 type: "GET",
                 url: "/get_precedent_by_charge",
                 data: {
-                    type: $(".dropdown-toggle:first-child")[0].value,
-/*                    charge:,
-                    dismiss:,
-                    farewell:
-*/                }
+                    type: $(".type:first-child")[0].value,
+                    charge: $("#charge")[0].value,
+                    dismiss: $(".dismiss:first-child")[0].value,
+                    farewell: $(".farewell:first-child")[0].value
+                }
             }).done(function (msg) {
                  data = JSON.parse(msg);
              });
@@ -548,32 +75,38 @@
 
     <div class="form-group">
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">타입
+          <button class="btn btn-primary dropdown-toggle type" type="button" data-toggle="dropdown">타입
           <span class="caret"></span></button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu type-menu">
             <li><a href="#">민사</a></li>
             <li><a href="#">형사</a></li>
           </ul>
         </div>
 
-        <div class="radio">
-            <label for="usr">기각:</label>
-            <label class="radio-inline"><input type="radio" name="dismiss">YES</label>
-            <label class="radio-inline"><input type="radio" name="dismiss">NO</label>
-            <label class="radio-inline"><input type="radio" name="dismiss">일부 기각</label>
-            <label class="radio-inline"><input type="radio" name="dismiss" checked>선택 안함</label>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle dismiss" type="button" data-toggle="dropdown">기각
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu dismiss-menu">
+            <li><a href="#">예</a></li>
+            <li><a href="#">아니오</a></li>
+            <li><a href="#">일부 기각</a></li>
+            <li><a href="#">선택 안함</a></li>
+          </ul>
         </div>
 
-        <div class="radio">
-            <label for="usr">환송:</label>
-            <label class="radio-inline"><input type="radio" name="farewell">YES</label>
-            <label class="radio-inline"><input type="radio" name="farewell">NO</label>
-            <label class="radio-inline"><input type="radio" name="farewell">일부 환송</label>
-            <label class="radio-inline"><input type="radio" name="farewell" checked>선택 안함</label>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle farewell" type="button" data-toggle="dropdown">환송
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu farewell-menu">
+            <li><a href="#">예</a></li>
+            <li><a href="#">아니오</a></li>
+            <li><a href="#">일부 기각</a></li>
+            <li><a href="#">선택 안함</a></li>
+          </ul>
         </div>
 
         <label for="usr">관련법:</label>
-        <input id="accusedID" class="form-control" type="text" name="accusedID"/>
+        <input id="charge" class="form-control" type="text" name="charge"/>
         </br>
         <center><button class="btn btn-primary" style="width:100%" onclick="search()">검색</button></center>
     </div>
