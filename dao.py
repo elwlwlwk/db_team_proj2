@@ -107,3 +107,29 @@ def get_civil_evidence(precedent_id):
     cursor = get_dict_cursor()
     cursor.execute("select * from 민사판결증거 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
+
+def get_criminal_defendant(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select * from 형사판결피고 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_defendant(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select * from 민사판결피고 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_criminal_plaintiff(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 형사소송원고.* "
+                   "from 형사소송원고 join 형사판결 "
+                   "on 형사소송원고.소송ID= 형사판결.소송ID "
+                   "where 형사판결.판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_plaintiff(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 민사소송원고.* "
+                   "from 민사소송원고 join 민사판결 "
+                   "on 민사소송원고.소송ID= 민사판결.소송ID "
+                   "where 민사판결.판결ID= %s", (precedent_id))
+    return cursor.fetchall()
