@@ -4,7 +4,7 @@
     {% block head %}
     {#<link rel='stylesheet' href='https://cdn.jsdelivr.net/font-kopub/1.0/kopubdotum.css'>#}
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?q=5">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?q=6">
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <!-- Latest compiled and minified CSS -->
@@ -24,7 +24,8 @@
     {% endblock %}
   </head>
   <body>
-  <div id="header" class="header col-sm-12" style="font-size:x-large;font-weight: 700">
+  <div id="header" class="header col-sm-12" style="font-size:large;font-weight: 700">
+      <div style="text-align: center;font-family: 'Droid Serif', serif; font-size: large;padding-bottom: 1%">JUDGEMENT DATABASE</div>
       <a href="/courts">법원 검색</a>&nbsp;&nbsp;|&nbsp;&nbsp;
       <a href="/precedent">판결 검색</a>&nbsp;&nbsp;|&nbsp;&nbsp;
       <a href="/accused_search">피고 검색</a>&nbsp;&nbsp;|&nbsp;&nbsp;
