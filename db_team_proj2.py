@@ -113,7 +113,14 @@ def charge_search():
 
 @app.route('/get_precedent_by_charge')
 def get_precedent_by_charge():
-    return ''
+    type= request.args.get('type')
+    charge= request.args.get('charge')
+    dismiss= request.args.get('dismiss')
+    farewell= request.args.get('farewell')
+    if type== 'civil':
+        return json.dumps(dao.get_civil_precedent_by_charge(charge,dismiss,farewell))
+    else:
+        return json.dumps(dao.get_criminal_precedent_by_charge(charge, dismiss, farewell))
 
 @app.route('/')
 def hello_world():
