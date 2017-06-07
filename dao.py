@@ -90,18 +90,20 @@ def get_fine_pie():
 
 def get_criminal_precedent(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("SELECT 형사판결.판결ID, 형사판결.소송ID, 형사판결법원.법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 변호사국선여부, 국민참여재판여부 "
+    cursor.execute("SELECT 형사판결.판결ID, GROUP_CONCAT(형사판결.소송ID) as 소송ID, 형사판결법원.법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 변호사국선여부, 국민참여재판여부 "
                    "FROM 형사판결 join 형사판결법원 "
                    "on 형사판결.판결ID= 형사판결법원.판결ID "
-                   "where 형사판결.판결ID= %s", (precedent_id))
+                   "where 형사판결.판결ID= %s "
+                   "group by 판결ID, 법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 변호사국선여부, 국민참여재판여부", (precedent_id))
     return cursor.fetchall()
 
 def get_civil_precedent(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("SELECT 민사판결.판결ID, 민사판결.소송ID, 민사판결법원.법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문 "
+    cursor.execute("SELECT 민사판결.판결ID, GROUP_CONCAT(민사판결.소송ID) as 소송ID, 민사판결법원.법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문 "
                    "FROM 민사판결 join 민사판결법원 "
                    "on 민사판결.판결ID= 민사판결법원.판결ID "
-                   "where 민사판결.판결ID= %s", (precedent_id))
+                   "where 민사판결.판결ID= %s "
+                   "group by 판결ID, 법원이름, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문", (precedent_id))
     return cursor.fetchall()
 
 def get_criminal_evidence(precedent_id):
