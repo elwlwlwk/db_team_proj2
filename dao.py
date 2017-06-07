@@ -90,32 +90,38 @@ def get_fine_pie():
 
 def get_criminal_precedent(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 형사판결 where 판결ID= %s", (precedent_id))
+    cursor.execute("SELECT 형사판결.판결ID, 형사판결.소송ID, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 변호사국선여부, 국민참여재판여부, 형사판결법원.법원이름 "
+                   "FROM 형사판결 join 형사판결법원 "
+                   "on 형사판결.판결ID= 형사판결법원.판결ID "
+                   "where 형사판결.판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_civil_precedent(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 민사판결 where 판결ID= %s", (precedent_id))
+    cursor.execute("SELECT 민사판결.판결ID, 민사판결.소송ID, 판시사항, 판결단계, 판결날짜, 판결주문, 환송여부, 판결기각여부, 판결전문, 민사판결법원.법원이름 "
+                   "FROM 민사판결 join 민사판결법원 "
+                   "on 민사판결.판결ID= 민사판결법원.판결ID "
+                   "where 민사판결.판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_criminal_evidence(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 형사판결증거 where 판결ID= %s", (precedent_id))
+    cursor.execute("select 판결ID, 증거ID, 증거이미지, 증거설명 from 형사판결증거 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_civil_evidence(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 민사판결증거 where 판결ID= %s", (precedent_id))
+    cursor.execute("select 판결ID, 증거ID, 증거이미지, 증거설명 from 민사판결증거 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_criminal_defendant(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 형사판결피고 where 판결ID= %s", (precedent_id))
+    cursor.execute("select 피고ID, 벌금형량, 징역형량, 사회봉사형량, 집행유예형량, 무기징역선고여부, 사형선고여부 from 형사판결피고 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_civil_defendant(precedent_id):
     cursor = get_dict_cursor()
-    cursor.execute("select * from 민사판결피고 where 판결ID= %s", (precedent_id))
+    cursor.execute("select 피고ID, 법원조정여부 from 민사판결피고 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
 def get_criminal_plaintiff(precedent_id):
