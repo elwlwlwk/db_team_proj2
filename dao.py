@@ -49,9 +49,9 @@ def get_top_accused():
 
 def get_accused_info(accused_id):
     cursor= get_dict_cursor()
-    cursor.execute("select 형사판결.판결ID, 소송ID, 피고ID, 사람.이름, 벌금형량, 징역형량, 사회봉사형량, 집행유예형량, 사형선고여부, 무기징역선고여부, 판결이름, 원고승소여부 "
+    cursor.execute("select 형사판결.판결ID, 형사판결.소송ID, 피고ID, 벌금형량, 징역형량, 사회봉사형량, 집행유예형량, 사형선고여부, 무기징역선고여부, 환송여부 "
                    "from 형사판결피고 join 형사판결 join 사람 "
-                   "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결피고.피고ID= 사람.ID "
+                   "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결피고.피고ID= 사람.사람ID "
                    "where 형사판결피고.피고ID= %s;", (accused_id))
     return cursor.fetchall();
 
@@ -69,6 +69,7 @@ def get_servitude_pie():
     cursor.execute("select 관련죄, cast(AVG(징역형량) as CHAR) as 평균 "
                    "from 형사판결피고 join 형사판결 join 형사판결법 join 법 "
                    "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결법.판결ID= 형사판결.판결ID and 법.법조ID= 형사판결법.법조ID and 법.법항ID= 형사판결법.법항ID "
+                   "where 관련죄 is not null"
                    "group by 관련죄;")
     return cursor.fetchall()
 
@@ -77,5 +78,6 @@ def get_fine_pie():
     cursor.execute("select 관련죄, cast(AVG(벌금형량) as CHAR) as 평균 "
                    "from 형사판결피고 join 형사판결 join 형사판결법 join 법 "
                    "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결법.판결ID= 형사판결.판결ID and 법.법조ID= 형사판결법.법조ID and 법.법항ID= 형사판결법.법항ID "
+                   "where 관련죄 is not null"
                    "group by 관련죄;")
     return cursor.fetchall()
