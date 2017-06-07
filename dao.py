@@ -43,21 +43,22 @@ def get_court_criminal_precedents(court_name):
 def get_top_accused():
     cursor= get_dict_cursor()
     cursor.execute('select 사람ID, count(*) as count '
-                   'from (SELECT 소송ID as 소송ID, 사람.사람ID as 사람ID '
-                   'FROM 형사판결피고 join 사람 join 형사판결 '
-                   'on 사람.사람ID= 형사판결피고.피고ID and 형사판결.판결ID= 형사판결피고.판결ID '
-                   'group by 형사판결.소송ID, 사람.사람ID) as 범죄자 '
+                   'from (SELECT 형사판결.판결ID as 판결ID, 사람.사람ID as 사람ID '
+                   'FROM 형사판결피고 join 사람 join 형사판결 on 사람.사람ID= 형사판결피고.피고ID and 형사판결.판결ID= 형사판결피고.판결ID '
+                   'group by 형사판결.판결ID, 사람.사람ID) as 범죄자 '
                    'group by 사람ID '
-                   'order by count desc '
-                   'limit 3;')
+                   'order by '
+                   'count desc '
+                   'limit 5;')
     return cursor.fetchall();
 
 def get_accused_info(accused_id):
     cursor= get_dict_cursor()
-    cursor.execute("select 형사판결.판결ID, 형사판결.소송ID, 피고ID, 벌금형량, 징역형량, 사회봉사형량, 집행유예형량, 사형선고여부, 무기징역선고여부, 환송여부 "
+    cursor.execute("select 형사판결.판결ID, GROUP_CONCAT(형사판결.소송ID) as 소송ID, 피고ID, 벌금형량, 징역형량, 사회봉사형량, 집행유예형량, 사형선고여부, 무기징역선고여부, 환송여부 "
                    "from 형사판결피고 join 형사판결 join 사람 "
                    "on 형사판결피고.판결ID= 형사판결.판결ID and 형사판결피고.피고ID= 사람.사람ID "
-                   "where 형사판결피고.피고ID= %s;", (accused_id))
+                   "where 형사판결피고.피고ID= %s "
+                   "group by 판결ID, 피고ID, 벌금형량, 징역형량, 사회봉사형량, 집행유예형량, 사형선고여부, 무기징역선고여부, 환송여부", (accused_id))
     return cursor.fetchall();
 
 def get_criminal_pie():

@@ -121,6 +121,7 @@ def get_precedent_by_charge():
         dismiss='%'
     if farewell== '':
         farewell='%'
+    print(charge, dismiss, farewell)
     if type== 'civil':
         return json.dumps(dao.get_civil_precedent_by_charge(charge,dismiss,farewell))
     else:
