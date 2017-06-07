@@ -22,7 +22,6 @@
                     { "className": "dt-center", "width": "10%" },
                     { "className": "dt-center", "width": "10%" },
                     { "width": "40%" },
-                    { "className": "dt-center", "width": "10%" },
                     { "className": "dt-center", "width": "10%" }
                   ]
             };
@@ -96,7 +95,6 @@
                     판결단계:x.판결단계,
                     판결날짜:x.판결날짜,
                     판결전문:x.판결전문,
-                    피고판결불복여부:x.피고판결불복여부,
                     법원이름:x.법원이름
                 }});
                 criminal = ret.criminal.map((x) => {return{
@@ -105,7 +103,6 @@
                     판결단계:x.판결단계,
                     판결날짜:x.판결날짜,
                     판결전문:x.판결전문,
-                    피고판결불복여부:x.피고판결불복여부,
                     법원이름:x.법원이름
                 }});
 
@@ -134,7 +131,13 @@
                     $("#tableBody")[0].append(tr);
                 }
 
-                $('#example').DataTable(tableSetting);
+                var table = $('#example').DataTable(tableSetting);
+
+                $('#example tbody').on('click', 'tr', function () {
+                    var data = table.row( this ).data();
+                     window.location.href = '/precedent?precedent='+data[1];
+
+                } );
 
 
             })
@@ -158,7 +161,6 @@
                 <th>판결단계</th>
                 <th>판결날짜</th>
                 <th>판결전문</th>
-                <th>피고판결불복여부</th>
                 <th>법원이름</th>
             </tr>
         </thead>
@@ -169,7 +171,6 @@
                 <th>판결단계</th>
                 <th>판결날짜</th>
                 <th>판결전문</th>
-                <th>피고판결불복여부</th>
                 <th>법원이름</th>
             </tr>
         </tfoot>
