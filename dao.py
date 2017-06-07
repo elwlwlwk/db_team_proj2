@@ -133,3 +133,19 @@ def get_civil_plaintiff(precedent_id):
                    "on 민사소송원고.소송ID= 민사판결.소송ID "
                    "where 민사판결.판결ID= %s", (precedent_id))
     return cursor.fetchall()
+
+def get_criminal_law(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 법.법분류, 법.법조ID, 법.법항ID, 법.법호ID, 법.법목ID, 법.관련죄 "
+                   "from 형사판결법 join 법 "
+                   "on 형사판결법.법항ID= 법.법항ID and 형사판결법.법조ID= 법.법조ID and 형사판결법.법목ID= 법.법목ID "
+                   "where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_law(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select 법.법분류, 법.법조ID, 법.법항ID, 법.법호ID, 법.법목ID, 법.관련죄 "
+                   "from 민사판결법 join 법 "
+                   "on 민사판결법.법항ID= 법.법항ID and 민사판결법.법조ID= 법.법조ID and 민사판결법.법목ID= 법.법목ID "
+                   "where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()

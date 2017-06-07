@@ -86,7 +86,7 @@ def get_precedent():
         result["evidence"] = dao.get_civil_evidence(precedent_id)
         result["defendant"] = dao.get_civil_defendant(precedent_id)
         result["plaintiff"] = dao.get_civil_plaintiff(precedent_id)
-
+        result["law"] = dao.get_civil_law(precedent_id)
 
     if len(criminal_precedent) != 0:
         result["type"] = "criminal"
@@ -94,6 +94,7 @@ def get_precedent():
         result["evidence"] = dao.get_criminal_evidence(precedent_id)
         result["defendant"] = dao.get_criminal_defendant(precedent_id)
         result["plaintiff"] = dao.get_criminal_plaintiff(precedent_id)
+        result["law"] = dao.get_criminal_law(precedent_id)
 
     return json.dumps(result)
 
