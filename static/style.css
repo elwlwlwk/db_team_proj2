@@ -1,0 +1,28 @@
+/* KoPub Dotum */
+@font-face {
+  font-family: 'KoPub Dotum';
+  font-style: normal;
+  font-weight: 300;
+  src: url(/static/KoPubDotum-Light.eot);
+  src: url(/static/KoPubDotum-Light.eot?#iefix) format('embedded-opentype'),
+       url(/static/KoPubDotum-Regular.woff) format('woff'),
+       url(/static/KoPubDotum-Regular.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'KoPub Dotum';
+ font-style: normal;
+ font-weight: 400;
+  src: url(/static/KoPubDotum-Light.eot);
+  src: url(/static/KoPubDotum-Light.eot?#iefix) format('embedded-opentype'),
+       url(/static/KoPubDotum-Regular.woff) format('woff'),
+       url(/static/KoPubDotum-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'KoPub Dotum';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/static/KoPubDotum-Light.eot);
+  src: url(/static/KoPubDotum-Light.eot?#iefix) format('embedded-opentype'),
+       url(/static/KoPubDotum-Regular.woff) format('woff'),
+       url(/static/KoPubDotum-Regular.ttf) format('truetype');
+}

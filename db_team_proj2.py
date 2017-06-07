@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import dao
 import json
 
 app = Flask(__name__)
+
+@app.route('/base/<path:filename>')
+def base_static(filename):
+    return send_from_directory(app.root_path + '/../static/', filename)
 
 @app.route('/courts')
 def courts():
@@ -34,6 +38,7 @@ def civil_precedents():
         dao.get_civil_precedents()
         pass
     return
+
 
 @app.route('/criminal_statics')
 def criminal_statics():
