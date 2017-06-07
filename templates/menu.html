@@ -75,6 +75,7 @@
                       color: '#6D6E70'
                         },
                 },
+                height:"100%"
             };
 
             Plotly.newPlot(TESTER, data, layout);
@@ -148,11 +149,17 @@
     </script>
 {% endblock %}
 {% block content %}
-<div id="tester" style="width:100%;height:30%;"></div>
-    법원 이름: <input id="courtName" type="text" name="courtName"/><button onclick="search()">검색</button>
-    </br>
-    </br>
+<div id="tester" style="width:100%;height:60%;"></div>
 
+
+    <div class="form-group">
+        <label for="usr">법원 이름: </label>
+        <input id="courtName" class="form-control" type="text" name="courtName"/>
+        </br>
+        <center><button class="btn btn-primary" style="width:100%" onclick="search()">검색</button></center>
+    </div>
+
+    <div>
  <table id="example" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -177,6 +184,7 @@
         <tbody id="tableBody">
         </tbody>
     </table>
+    </div>
 
 
 

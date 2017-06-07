@@ -44,7 +44,7 @@
                         td.innerHTML = ret[idx][key];
                         tr.append(td);
                     });
-                    $("#top_accused")[0].append(tr);
+                    $("#top_accused tbody")[0].append(tr);
                 }
             });
 
@@ -123,15 +123,21 @@
 {% block content %}
 
 
- <table id="top_accused" cellspacing="0" width="100%">
-    <tr>
-        <td>이름</td>
-        <td>전과 수</td>
+ <table id="top_accused" class="table" cellspacing="0" width="100%">
+ <thead>
+     <tr>
+        <th>이름</th>
+        <th>전과 수</th>
     </tr>
+ </thead>
+  <tbody>
+ </tbody>
+
  </table>
-
-    피고ID: <input id="accusedID" type="text" name="accusedID"/><button onclick="search()">검색</button>
-    </br>
-    </br>
-
+        <div class="form-group">
+        <label for="usr">피고ID: </label>
+        <input id="accusedID" class="form-control" type="text" name="accusedID"/>
+        </br>
+        <center><button class="btn btn-primary" style="width:100%" onclick="search()">검색</button></center>
+    </div>
 {% endblock %}

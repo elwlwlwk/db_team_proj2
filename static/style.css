@@ -21,8 +21,33 @@
   font-family: 'KoPub Dotum';
   font-style: normal;
   font-weight: 700;
-  src: url(/static/KoPubDotum-Light.eot);
-  src: url(/static/KoPubDotum-Light.eot?#iefix) format('embedded-opentype'),
-       url(/static/KoPubDotum-Regular.woff) format('woff'),
-       url(/static/KoPubDotum-Regular.ttf) format('truetype');
+  src: url(/static/KoPubDotum-Bold.eot);
+  src: url(/static/KoPubDotum-Bold.eot?#iefix) format('embedded-opentype'),
+       url(/static/KoPubDotum-Bold.woff) format('woff'),
+       url(/static/KoPubDotum-Bold.ttf) format('truetype');
+}
+
+html, body {height:100%}
+
+.header {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 10%;
+  background-color: #f5f5f5;
+    text-align: center;
+    padding: 2%;
+    margin-bottom: 2%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 10%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+    text-align: center;
+    padding: 2%;
 }
