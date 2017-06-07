@@ -87,6 +87,9 @@ def get_precedent():
         result["defendant"] = dao.get_civil_defendant(precedent_id)
         result["plaintiff"] = dao.get_civil_plaintiff(precedent_id)
         result["judge"] = dao.get_civil_judge(precedent_id)
+        result["lawyer"] = dao.get_civil_lawyer(precedent_id)
+        result["witness"] = dao.get_civil_witness(precedent_id)
+        result['deputy'] = dao.get_deputy(precedent_id)
         result["law"] = dao.get_civil_law(precedent_id)
 
     if len(criminal_precedent) != 0:
@@ -96,9 +99,21 @@ def get_precedent():
         result["defendant"] = dao.get_criminal_defendant(precedent_id)
         result["plaintiff"] = dao.get_criminal_plaintiff(precedent_id)
         result["judge"] = dao.get_criminal_judge(precedent_id)
+        result["prosecutor"] = dao.get_prosecutor(precedent_id)
+        result["lawyer"] = dao.get_criminal_lawyer(precedent_id)
+        result["witness"] = dao.get_criminal_witness(precedent_id)
+        result['juror'] = dao.get_juror(precedent_id)
         result["law"] = dao.get_criminal_law(precedent_id)
 
     return json.dumps(result)
+
+@app.route('/charge_search')
+def charge_search():
+    return render_template('charge_search.html')
+
+@app.route('/get_precedent_by_charge')
+def get_precedent_by_charge():
+    return ''
 
 @app.route('/')
 def hello_world():
