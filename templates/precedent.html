@@ -233,6 +233,239 @@
                     tbody.append(tr);
                 }
 
+                ret = data.prosecutor;
+                if(ret!=undefined) {
+                    var id = "prosecutor";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    if (ret[0] != undefined) {
+                        Object.keys(ret[0]).forEach(function (key) {
+                            var th = document.createElement("th");
+                            th.innerHTML = key;
+                            tr.append(th);
+                        });
+                        thead.append(tr);
+
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+                        for (idx in ret) {
+                            var tr = document.createElement("tr");
+                            Object.keys(ret[idx]).forEach(function (key) {
+                                var td = document.createElement("td");
+                                td.innerHTML = ret[idx][key];
+                                tr.append(td);
+                            });
+                            tbody.append(tr);
+                        }
+                    } else {
+
+                    }
+                }
+
+
+                ret = data.lawyer;
+                if(ret!=undefined) {
+                    var id = "lawyer";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    if (ret[0] != undefined) {
+                        Object.keys(ret[0]).forEach(function (key) {
+                            var th = document.createElement("th");
+                            th.innerHTML = key;
+                            tr.append(th);
+                        });
+                        thead.append(tr);
+
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+                        for (idx in ret) {
+                            var tr = document.createElement("tr");
+                            Object.keys(ret[idx]).forEach(function (key) {
+                                var td = document.createElement("td");
+                                td.innerHTML = ret[idx][key];
+                                tr.append(td);
+                            });
+                            tbody.append(tr);
+                        }
+                    } else {
+
+                    }
+                }
+
+                                ret = data.witness;
+                if(ret!=undefined) {
+                    var id = "witness";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    if (ret[0] != undefined) {
+                        Object.keys(ret[0]).forEach(function (key) {
+                            var th = document.createElement("th");
+                            th.innerHTML = key;
+                            tr.append(th);
+                        });
+                        thead.append(tr);
+
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+                        for (idx in ret) {
+                            var tr = document.createElement("tr");
+                            Object.keys(ret[idx]).forEach(function (key) {
+                                var td = document.createElement("td");
+                                td.innerHTML = ret[idx][key];
+                                tr.append(td);
+                            });
+                            tbody.append(tr);
+                        }
+                    } else {
+
+                    }
+                }
+
+                ret = data.deputy;
+                if(ret!=undefined) {
+                    var id = "deputy";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    if (ret[0] != undefined) {
+                        Object.keys(ret[0]).forEach(function (key) {
+                            var th = document.createElement("th");
+                            th.innerHTML = key;
+                            tr.append(th);
+                        });
+                        thead.append(tr);
+
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+                        for (idx in ret) {
+                            var tr = document.createElement("tr");
+                            Object.keys(ret[idx]).forEach(function (key) {
+                                var td = document.createElement("td");
+                                td.innerHTML = ret[idx][key];
+                                tr.append(td);
+                            });
+                            tbody.append(tr);
+                        }
+                    } else {
+
+                    }
+                }
+
+
+                ret = data.juror;
+                if(ret!=undefined) {
+                    var id = "juror";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    if (ret[0] != undefined) {
+                        Object.keys(ret[0]).forEach(function (key) {
+                            var th = document.createElement("th");
+                            th.innerHTML = key;
+                            tr.append(th);
+                        });
+                        thead.append(tr);
+
+                        while (tbody.firstChild) {
+                            tbody.removeChild(tbody.firstChild);
+                        }
+                        for (idx in ret) {
+                            var tr = document.createElement("tr");
+                            Object.keys(ret[idx]).forEach(function (key) {
+                                var td = document.createElement("td");
+                                td.innerHTML = ret[idx][key];
+                                tr.append(td);
+                            });
+                            tbody.append(tr);
+                        }
+                    } else {
+
+                    }
+                }
+
+
                 ret = data.law;
                 var id = "law";
                 if(document.getElementById(id)!=null) {
