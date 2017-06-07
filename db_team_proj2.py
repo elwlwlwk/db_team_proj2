@@ -62,6 +62,8 @@ def get_fine_pie():
     return json.dumps(dao.get_fine_pie())
 @app.route('/get_servitude_pie')
 def get_servitude_pie():
+    servitute= dao.get_servitude_pie()
+
     return json.dumps(dao.get_servitude_pie())
 
 @app.route('/')
