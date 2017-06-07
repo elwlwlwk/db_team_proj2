@@ -1,0 +1,193 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+    <style type="text/css">
+    .important { color: #336699; }
+  </style>
+    <script>
+        $(document).ready(function() {
+
+           var data = [{
+              values: [],
+              labels: [],
+              type: 'pie',
+               domain: {x: [0, 0.25]},
+               name: '판결수',
+           },
+               {
+              values: [],
+              labels: [],
+              type: 'pie',
+                   domain: {x: [0.35, 0.6]},
+                   name: '평균 벌금',
+            },
+               {
+              values: [],
+              labels: [],
+              type: 'pie',
+                   domain: {x: [0.7, 0.95]},
+                   name: '평균 형량',
+            }
+           ];
+
+           var layout = {
+              height: "800",
+              width: "1500"
+            };
+
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/get_criminal_pie"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+
+
+           for (idx in ret) {
+               data[0].values.push(ret[idx]['count']);
+               data[0].labels.push(ret[idx]['관련죄']);
+           }
+
+            Plotly.newPlot('criminal_pie', data, layout);
+            });
+
+                        $.ajax({
+                type: "GET",
+                url: "/get_fine_pie"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+
+
+           for (idx in ret) {
+               data[1].values.push(ret[idx]['평균']);
+               data[1].labels.push(ret[idx]['관련죄']);
+           }
+
+            Plotly.newPlot('criminal_pie', data, layout);
+            });
+
+                        $.ajax({
+                type: "GET",
+                url: "/get_servitude_pie"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+
+
+           for (idx in ret) {
+               data[2].values.push(ret[idx]['평균']);
+               data[2].labels.push(ret[idx]['관련죄']);
+           }
+
+            Plotly.newPlot('criminal_pie', data, layout);
+            });
+
+            /*
+            $.ajax({
+                type: "GET",
+                url: "/get_criminal_pie"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+           var data = [{
+              values: [],
+              labels: [],
+              type: 'pie'
+            }];
+
+
+           for (idx in ret) {
+               data[0].values.push(ret[idx]['count']);
+               data[0].labels.push(ret[idx]['관련죄']);
+           }
+
+            var layout = {
+              height: "100%",
+              width: "100%"
+            };
+
+            Plotly.newPlot('criminal_pie', data, layout);
+
+            });
+*/
+{#
+
+            $.ajax({
+                type: "GET",
+                url: "/get_fine_pie"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+           var data = [{
+              values: [],
+              labels: [],
+              type: 'pie'
+            }];
+
+
+           for (idx in ret) {
+               data[0].values.push(ret[idx]['평균']);
+               data[0].labels.push(ret[idx]['관련죄']);
+           }
+
+            var layout = {
+              height: "100%",
+              width: "100%"
+            };
+
+            Plotly.newPlot('fine_pie', data, layout);
+
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/get_servitude_pie"
+            }).done(function (msg) {
+                ret = JSON.parse(msg);
+
+           var data = [{
+              values: [],
+              labels: [],
+              type: 'pie'
+            }];
+
+
+           for (idx in ret) {
+               data[0].values.push(ret[idx]['평균']);
+               data[0].labels.push(ret[idx]['관련죄']);
+           }
+
+            var layout = {
+              height: "100%",
+              width: "100%"
+            };
+
+            Plotly.newPlot('servitude_pie', data, layout);
+
+            });
+#}
+
+
+        });
+    </script>
+{% endblock %}
+{% block content %}
+
+<div id="criminal_pie" style="width:100px;height:80px;"></div>
+<div id="fine_pie" style="width:30%;height:30%;"></div>
+<div id="servitude_pie" style="width:30%;height:30%;"></div>
+
+{% endblock %}

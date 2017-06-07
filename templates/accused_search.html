@@ -24,8 +24,6 @@
                     { "className": "dt-center", "width": "5%" },
                     { "className": "dt-center", "width": "5%" },
                     { "className": "dt-center", "width": "5%" },
-                    { "className": "dt-center", "width": "20%" },
-                    { "className": "dt-center", "width": "5%" }
                   ]
             };
 
@@ -39,9 +37,6 @@
                 ret = JSON.parse(msg);
 
                 var top_accused = document.getElementById("top_accused");
-                while (top_accused.firstChild) {
-                    top_accused.removeChild(tableBody.firstChild);
-                }
                 for (idx in ret) {
                     var tr = document.createElement("tr");
                     Object.keys(ret[idx]).forEach(function (key) {

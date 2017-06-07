@@ -37,7 +37,7 @@ def civil_precedents():
 
 @app.route('/criminal_statics')
 def criminal_statics():
-    pass
+    return render_template('criminal_statics.html')
 
 @app.route('/accused_search')
 def accused_search():
