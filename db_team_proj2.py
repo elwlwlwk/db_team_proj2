@@ -70,8 +70,24 @@ def precedent():
 
 @app.route('/get_precedent')
 def get_precedent():
+    result={}
     precedent_id= request.args.get('precedent')
-    return {}
+    civil_precedent= dao.get_civil_precedent(precedent_id)
+    criminal_precedent= dao.get_criminal_precedent(precedent_id)
+
+    if len(civil_precedent) != 0:
+        result["type"] = "civil"
+        result["precedent"] = civil_precedent
+        result["evidence"] = dao.get_civil_evidence(precedent_id)
+        #result["defendant"] = dao.get_civil_defendant(precedent_id)
+
+    if len(criminal_precedent) != 0:
+        result["type"] = "criminal"
+        result["precedent"] = criminal_precedent
+        result["evidence"] = dao.get_criminal_evidence(precedent_id)
+        #result["defendant"] = dao.get_civil_defendant(precedent_id)
+
+    return json.dumps(result)
 
 @app.route('/')
 def hello_world():

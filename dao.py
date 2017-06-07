@@ -87,3 +87,23 @@ def get_fine_pie():
                    "where 관련죄 is not null "
                    "group by 관련죄;")
     return cursor.fetchall()
+
+def get_criminal_precedent(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select * from 형사판결 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_precedent(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select * from 민사판결 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_criminal_evidence(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select * from 형사판결증거 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_civil_evidence(precedent_id):
+    cursor = get_dict_cursor()
+    cursor.execute("select * from 민사판결증거 where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
