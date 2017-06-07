@@ -185,8 +185,6 @@ def get_juror(precedent_id):
     cursor.execute("select 배심원ID from 형사판결배심원 where 판결ID= %s", (precedent_id))
     return cursor.fetchall()
 
-
-
 def get_criminal_law(precedent_id):
     cursor = get_dict_cursor()
     cursor.execute("select 법.법분류, 법.법조ID, 법.법항ID, 법.법호ID, 법.법목ID, 법.관련죄 "
@@ -201,4 +199,25 @@ def get_civil_law(precedent_id):
                    "from 민사판결법 join 법 "
                    "on 민사판결법.법항ID= 법.법항ID and 민사판결법.법조ID= 법.법조ID and 민사판결법.법목ID= 법.법목ID "
                    "where 판결ID= %s", (precedent_id))
+    return cursor.fetchall()
+
+def get_criminal_precedent_by_charge(charge, dismiss, farewell):
+    cursor = get_dict_cursor()
+    cursor.execute("select 죄형사판결.판결ID, 죄형사판결.소송ID, 판결날짜, 판결단계, 환송여부, 판결기각여부, 국민참여재판여부, GROUP_CONCAT(관련죄) as 관련법 "
+                   "from (select 형사판결.* "
+                   "from 형사판결 join 형사판결법 join 법 "
+                   "on 형사판결.판결ID= 형사판결법.판결ID and 형사판결법.법항ID= 법.법항ID and 형사판결법.법조ID= 법.법조ID and 형사판결법.법목ID= 법.법목ID "
+                   "where 관련죄 like %s and 환송여부=%s and 판결기각여부=%s) as 죄형사판결 join 형사판결법 join 법 "
+                   "on 죄형사판결.판결ID= 형사판결법.판결ID and 형사판결법.법항ID= 법.법항ID and 형사판결법.법조ID= 법.법조ID and 형사판결법.법목ID= 법.법목ID "
+                   "group by 판결ID, 소송ID, 판결날짜, 판결단계, 환송여부, 판결기각여부, 국민참여재판여부", ('%'+charge+'%', farewell, dismiss))
+    return cursor.fetchall()
+
+def get_civil_precedent_by_charge(charge, dismiss, farewell):
+    cursor = get_dict_cursor()
+    cursor.execute("select 죄민사판결.판결ID, 죄민사판결.소송ID, 판결날짜, 판결단계, 환송여부, 판결기각여부, GROUP_CONCAT(관련죄) as 관련법 "
+                   "from (select 민사판결.* from 민사판결 join 민사판결법 join 법 "
+                   "on 민사판결.판결ID= 민사판결법.판결ID and 민사판결법.법항ID= 법.법항ID and 민사판결법.법조ID= 법.법조ID and 민사판결법.법목ID= 법.법목ID "
+                   "where 관련죄 like %s and 환송여부=%s and 판결기각여부=%s) as 죄민사판결 join 민사판결법 join 법 "
+                   "on 죄민사판결.판결ID= 민사판결법.판결ID and 민사판결법.법항ID= 법.법항ID and 민사판결법.법조ID= 법.법조ID and 민사판결법.법목ID= 법.법목ID "
+                   "group by 판결ID, 소송ID, 판결날짜, 판결단계, 환송여부, 판결기각여부", ('%'+charge+'%', farewell, dismiss))
     return cursor.fetchall()
