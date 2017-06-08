@@ -18,27 +18,28 @@
                 searching: false,
             };
 
-        $(document).ready(function() {
-                        $('#example').dataTable().fnDestroy();
+        function search(str) {
+            if($("#accusedID")[0].value != '') {
+                str = $("#accusedID")[0].value;
+            }
+            if(str=="None") {
+            } else {
+                $('#example').dataTable().fnDestroy();
 
-            $.ajax({
-                type: "GET",
-                url: "/get_precedent",
-                data: {precedent: "{{precedent}}" }
-            }).done(function (msg) {
-                data = JSON.parse(msg);
+                $.ajax({
+                    type: "GET",
+                    url: "/get_precedent",
+                    data: {precedent: str}
+                }).done(function (msg) {
+                    data = JSON.parse(msg);
 
-
-
-                Object.keys(data).forEach(function (key) {
-
-
-                });
+                    Object.keys(data).forEach(function (key) {
+                    });
 
                     ret = data.precedent;
                     var id = "precedent";
                     if (document.getElementById(id) != null) {
-                        $('#content').remove($("#"+id)[0]);
+                        $('#content').remove($("#" + id)[0]);
                     }
                     var table = document.createElement("table");
 
@@ -48,10 +49,10 @@
                     table.setAttribute('width', '100%');
                     $('#content').append(table);
                     var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead'+id);
+                    thead.setAttribute('id', 'tableHead' + id);
                     table.append(thead);
                     var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody'+id);
+                    tbody.setAttribute('id', 'tableBody' + id);
                     table.append(tbody);
 
                     for (idx in ret) {
@@ -68,109 +69,27 @@
                     }
 
 
+                    ret = data.plaintiff;
+                    var id = "plaintiff";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
 
-                ret = data.plaintiff;
-                var id = "plaintiff";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
+                    var tableHead = document.getElementById("tableHead");
                     var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
-                    });
-                    tbody.append(tr);
-                }
-
-                ret = data.defendant;
-                var id = "defendant";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
-                    });
-                    tbody.append(tr);
-                }
-
-                ret = data.evidence;
-                var id = "evidence";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                if(ret[0]!=undefined) {
-                     Object.keys(ret[0]).forEach(function (key) {
+                    Object.keys(ret[0]).forEach(function (key) {
                         var th = document.createElement("th");
                         th.innerHTML = key;
                         tr.append(th);
@@ -189,53 +108,49 @@
                         });
                         tbody.append(tr);
                     }
-                } else {
 
-                }
+                    ret = data.defendant;
+                    var id = "defendant";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
 
-                ret = data.judge;
-                var id = "judge";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
+                    var tableHead = document.getElementById("tableHead");
                     var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
+                    Object.keys(ret[0]).forEach(function (key) {
+                        var th = document.createElement("th");
+                        th.innerHTML = key;
+                        tr.append(th);
                     });
-                    tbody.append(tr);
-                }
+                    thead.append(tr);
 
-                ret = data.prosecutor;
-                if(ret!=undefined) {
-                    var id = "prosecutor";
+                    while (tbody.firstChild) {
+                        tbody.removeChild(tbody.firstChild);
+                    }
+                    for (idx in ret) {
+                        var tr = document.createElement("tr");
+                        Object.keys(ret[idx]).forEach(function (key) {
+                            var td = document.createElement("td");
+                            td.innerHTML = ret[idx][key];
+                            tr.append(td);
+                        });
+                        tbody.append(tr);
+                    }
+
+                    ret = data.evidence;
+                    var id = "evidence";
                     if (document.getElementById(id) != null) {
                         $('#content').remove($("#" + id)[0]);
                     }
@@ -277,12 +192,9 @@
                     } else {
 
                     }
-                }
 
-
-                ret = data.lawyer;
-                if(ret!=undefined) {
-                    var id = "lawyer";
+                    ret = data.judge;
+                    var id = "judge";
                     if (document.getElementById(id) != null) {
                         $('#content').remove($("#" + id)[0]);
                     }
@@ -301,219 +213,307 @@
 
                     var tableHead = document.getElementById("tableHead");
                     var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-                                ret = data.witness;
-                if(ret!=undefined) {
-                    var id = "witness";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-                ret = data.deputy;
-                if(ret!=undefined) {
-                    var id = "deputy";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-
-                ret = data.juror;
-                if(ret!=undefined) {
-                    var id = "juror";
-                    if (document.getElementById(id) != null) {
-                        $('#content').remove($("#" + id)[0]);
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute('id', id);
-                    table.setAttribute('class', 'display table');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('width', '100%');
-                    $('#content').append(table);
-                    var thead = document.createElement("thead");
-                    thead.setAttribute('id', 'tableHead' + id);
-                    table.append(thead);
-                    var tbody = document.createElement("tbody");
-                    tbody.setAttribute('id', 'tableBody' + id);
-                    table.append(tbody);
-
-                    var tableHead = document.getElementById("tableHead");
-                    var tr = document.createElement("tr");
-                    if (ret[0] != undefined) {
-                        Object.keys(ret[0]).forEach(function (key) {
-                            var th = document.createElement("th");
-                            th.innerHTML = key;
-                            tr.append(th);
-                        });
-                        thead.append(tr);
-
-                        while (tbody.firstChild) {
-                            tbody.removeChild(tbody.firstChild);
-                        }
-                        for (idx in ret) {
-                            var tr = document.createElement("tr");
-                            Object.keys(ret[idx]).forEach(function (key) {
-                                var td = document.createElement("td");
-                                td.innerHTML = ret[idx][key];
-                                tr.append(td);
-                            });
-                            tbody.append(tr);
-                        }
-                    } else {
-
-                    }
-                }
-
-
-                ret = data.law;
-                var id = "law";
-                if(document.getElementById(id)!=null) {
-                    $('#content').remove($("#"+id)[0]);
-                }
-                var table = document.createElement("table");
-                table.setAttribute('id',id);
-                table.setAttribute('class','display table');
-                table.setAttribute('cellspacing','0');
-                table.setAttribute('width','100%');
-                $('#content').append(table);
-                var thead = document.createElement("thead");
-                thead.setAttribute('id','tableHead'+id);
-                table.append(thead);
-                var tbody = document.createElement("tbody");
-                tbody.setAttribute('id','tableBody'+id);
-                table.append(tbody);
-
-                var tableHead = document.getElementById("tableHead");
-                var tr = document.createElement("tr");
-                Object.keys(ret[0]).forEach(function (key) {
-                    var th = document.createElement("th");
-                    th.innerHTML = key;
-                    tr.append(th);
-                });
-                thead.append(tr);
-
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-                for (idx in ret) {
-                    var tr = document.createElement("tr");
-                    Object.keys(ret[idx]).forEach(function (key) {
-                        var td = document.createElement("td");
-                        td.innerHTML = ret[idx][key];
-                        tr.append(td);
+                    Object.keys(ret[0]).forEach(function (key) {
+                        var th = document.createElement("th");
+                        th.innerHTML = key;
+                        tr.append(th);
                     });
-                    tbody.append(tr);
-                }
+                    thead.append(tr);
+
+                    while (tbody.firstChild) {
+                        tbody.removeChild(tbody.firstChild);
+                    }
+                    for (idx in ret) {
+                        var tr = document.createElement("tr");
+                        Object.keys(ret[idx]).forEach(function (key) {
+                            var td = document.createElement("td");
+                            td.innerHTML = ret[idx][key];
+                            tr.append(td);
+                        });
+                        tbody.append(tr);
+                    }
+
+                    ret = data.prosecutor;
+                    if (ret != undefined) {
+                        var id = "prosecutor";
+                        if (document.getElementById(id) != null) {
+                            $('#content').remove($("#" + id)[0]);
+                        }
+                        var table = document.createElement("table");
+                        table.setAttribute('id', id);
+                        table.setAttribute('class', 'display table');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('width', '100%');
+                        $('#content').append(table);
+                        var thead = document.createElement("thead");
+                        thead.setAttribute('id', 'tableHead' + id);
+                        table.append(thead);
+                        var tbody = document.createElement("tbody");
+                        tbody.setAttribute('id', 'tableBody' + id);
+                        table.append(tbody);
+
+                        var tableHead = document.getElementById("tableHead");
+                        var tr = document.createElement("tr");
+                        if (ret[0] != undefined) {
+                            Object.keys(ret[0]).forEach(function (key) {
+                                var th = document.createElement("th");
+                                th.innerHTML = key;
+                                tr.append(th);
+                            });
+                            thead.append(tr);
+
+                            while (tbody.firstChild) {
+                                tbody.removeChild(tbody.firstChild);
+                            }
+                            for (idx in ret) {
+                                var tr = document.createElement("tr");
+                                Object.keys(ret[idx]).forEach(function (key) {
+                                    var td = document.createElement("td");
+                                    td.innerHTML = ret[idx][key];
+                                    tr.append(td);
+                                });
+                                tbody.append(tr);
+                            }
+                        } else {
+
+                        }
+                    }
 
 
+                    ret = data.lawyer;
+                    if (ret != undefined) {
+                        var id = "lawyer";
+                        if (document.getElementById(id) != null) {
+                            $('#content').remove($("#" + id)[0]);
+                        }
+                        var table = document.createElement("table");
+                        table.setAttribute('id', id);
+                        table.setAttribute('class', 'display table');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('width', '100%');
+                        $('#content').append(table);
+                        var thead = document.createElement("thead");
+                        thead.setAttribute('id', 'tableHead' + id);
+                        table.append(thead);
+                        var tbody = document.createElement("tbody");
+                        tbody.setAttribute('id', 'tableBody' + id);
+                        table.append(tbody);
+
+                        var tableHead = document.getElementById("tableHead");
+                        var tr = document.createElement("tr");
+                        if (ret[0] != undefined) {
+                            Object.keys(ret[0]).forEach(function (key) {
+                                var th = document.createElement("th");
+                                th.innerHTML = key;
+                                tr.append(th);
+                            });
+                            thead.append(tr);
+
+                            while (tbody.firstChild) {
+                                tbody.removeChild(tbody.firstChild);
+                            }
+                            for (idx in ret) {
+                                var tr = document.createElement("tr");
+                                Object.keys(ret[idx]).forEach(function (key) {
+                                    var td = document.createElement("td");
+                                    td.innerHTML = ret[idx][key];
+                                    tr.append(td);
+                                });
+                                tbody.append(tr);
+                            }
+                        } else {
+
+                        }
+                    }
+
+                    ret = data.witness;
+                    if (ret != undefined) {
+                        var id = "witness";
+                        if (document.getElementById(id) != null) {
+                            $('#content').remove($("#" + id)[0]);
+                        }
+                        var table = document.createElement("table");
+                        table.setAttribute('id', id);
+                        table.setAttribute('class', 'display table');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('width', '100%');
+                        $('#content').append(table);
+                        var thead = document.createElement("thead");
+                        thead.setAttribute('id', 'tableHead' + id);
+                        table.append(thead);
+                        var tbody = document.createElement("tbody");
+                        tbody.setAttribute('id', 'tableBody' + id);
+                        table.append(tbody);
+
+                        var tableHead = document.getElementById("tableHead");
+                        var tr = document.createElement("tr");
+                        if (ret[0] != undefined) {
+                            Object.keys(ret[0]).forEach(function (key) {
+                                var th = document.createElement("th");
+                                th.innerHTML = key;
+                                tr.append(th);
+                            });
+                            thead.append(tr);
+
+                            while (tbody.firstChild) {
+                                tbody.removeChild(tbody.firstChild);
+                            }
+                            for (idx in ret) {
+                                var tr = document.createElement("tr");
+                                Object.keys(ret[idx]).forEach(function (key) {
+                                    var td = document.createElement("td");
+                                    td.innerHTML = ret[idx][key];
+                                    tr.append(td);
+                                });
+                                tbody.append(tr);
+                            }
+                        } else {
+
+                        }
+                    }
+
+                    ret = data.deputy;
+                    if (ret != undefined) {
+                        var id = "deputy";
+                        if (document.getElementById(id) != null) {
+                            $('#content').remove($("#" + id)[0]);
+                        }
+                        var table = document.createElement("table");
+                        table.setAttribute('id', id);
+                        table.setAttribute('class', 'display table');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('width', '100%');
+                        $('#content').append(table);
+                        var thead = document.createElement("thead");
+                        thead.setAttribute('id', 'tableHead' + id);
+                        table.append(thead);
+                        var tbody = document.createElement("tbody");
+                        tbody.setAttribute('id', 'tableBody' + id);
+                        table.append(tbody);
+
+                        var tableHead = document.getElementById("tableHead");
+                        var tr = document.createElement("tr");
+                        if (ret[0] != undefined) {
+                            Object.keys(ret[0]).forEach(function (key) {
+                                var th = document.createElement("th");
+                                th.innerHTML = key;
+                                tr.append(th);
+                            });
+                            thead.append(tr);
+
+                            while (tbody.firstChild) {
+                                tbody.removeChild(tbody.firstChild);
+                            }
+                            for (idx in ret) {
+                                var tr = document.createElement("tr");
+                                Object.keys(ret[idx]).forEach(function (key) {
+                                    var td = document.createElement("td");
+                                    td.innerHTML = ret[idx][key];
+                                    tr.append(td);
+                                });
+                                tbody.append(tr);
+                            }
+                        } else {
+
+                        }
+                    }
 
 
+                    ret = data.juror;
+                    if (ret != undefined) {
+                        var id = "juror";
+                        if (document.getElementById(id) != null) {
+                            $('#content').remove($("#" + id)[0]);
+                        }
+                        var table = document.createElement("table");
+                        table.setAttribute('id', id);
+                        table.setAttribute('class', 'display table');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('width', '100%');
+                        $('#content').append(table);
+                        var thead = document.createElement("thead");
+                        thead.setAttribute('id', 'tableHead' + id);
+                        table.append(thead);
+                        var tbody = document.createElement("tbody");
+                        tbody.setAttribute('id', 'tableBody' + id);
+                        table.append(tbody);
+
+                        var tableHead = document.getElementById("tableHead");
+                        var tr = document.createElement("tr");
+                        if (ret[0] != undefined) {
+                            Object.keys(ret[0]).forEach(function (key) {
+                                var th = document.createElement("th");
+                                th.innerHTML = key;
+                                tr.append(th);
+                            });
+                            thead.append(tr);
+
+                            while (tbody.firstChild) {
+                                tbody.removeChild(tbody.firstChild);
+                            }
+                            for (idx in ret) {
+                                var tr = document.createElement("tr");
+                                Object.keys(ret[idx]).forEach(function (key) {
+                                    var td = document.createElement("td");
+                                    td.innerHTML = ret[idx][key];
+                                    tr.append(td);
+                                });
+                                tbody.append(tr);
+                            }
+                        } else {
+
+                        }
+                    }
 
 
+                    ret = data.law;
+                    var id = "law";
+                    if (document.getElementById(id) != null) {
+                        $('#content').remove($("#" + id)[0]);
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute('id', id);
+                    table.setAttribute('class', 'display table');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('width', '100%');
+                    $('#content').append(table);
+                    var thead = document.createElement("thead");
+                    thead.setAttribute('id', 'tableHead' + id);
+                    table.append(thead);
+                    var tbody = document.createElement("tbody");
+                    tbody.setAttribute('id', 'tableBody' + id);
+                    table.append(tbody);
+
+                    var tableHead = document.getElementById("tableHead");
+                    var tr = document.createElement("tr");
+                    Object.keys(ret[0]).forEach(function (key) {
+                        var th = document.createElement("th");
+                        th.innerHTML = key;
+                        tr.append(th);
+                    });
+                    thead.append(tr);
+
+                    while (tbody.firstChild) {
+                        tbody.removeChild(tbody.firstChild);
+                    }
+                    for (idx in ret) {
+                        var tr = document.createElement("tr");
+                        Object.keys(ret[idx]).forEach(function (key) {
+                            var td = document.createElement("td");
+                            td.innerHTML = ret[idx][key];
+                            tr.append(td);
+                        });
+                        tbody.append(tr);
+                    }
 
 
-            })
+                })
+            };
+
+        }
+
+        $(document).ready(function() {
+            search("{{precedent}}");
         });
 
     </script>
